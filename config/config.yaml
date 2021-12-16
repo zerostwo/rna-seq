@@ -1,0 +1,7 @@
+# path or URL to sample sheet (CSV format, columns: sample, condition, ...)
+samples: config/samples.csv
+
+index: 
+  /home/shpc_93816f5f84/ref/hisat2/genome
+gtf: 
+  /home/shpc_93816f5f84/projects/TRF-m6A/data/gencode.vM25.annotation.gtf
