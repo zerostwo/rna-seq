@@ -5,19 +5,19 @@ rule fastqc:
         r1 = "resources/{sample}_R1.fastq.gz",
         r2 = "resources/{sample}_R2.fastq.gz"
     output:
-        "results/{sample}/fastqc/{sample}_R1_fastqc.zip",
-        "results/{sample}/fastqc/{sample}_R2_fastqc.zip",
-        "results/{sample}/fastqc/{sample}_R1_fastqc.html",
-        "results/{sample}/fastqc/{sample}_R2_fastqc.html"
+        "results/fastqc/{sample}_R1_fastqc.zip",
+        "results/fastqc/{sample}_R2_fastqc.zip",
+        "results/fastqc/{sample}_R1_fastqc.html",
+        "results/fastqc/{sample}_R2_fastqc.html"
     log:
-        "results/{sample}/logs/fastqc.log"
+        "results/logs/{sample}.fastqc.log"
     conda:
         "../envs/rna.yaml"
     priority: 1
     params:
         out_dir=lambda wildcards, output: os.path.split(output[0])[0]
     benchmark:
-        "results/{sample}/benchmarks/fastqc.benchmark.txt"
+        "results/benchmarks/{sample}.fastqc.benchmark.txt"
     threads: 2
     shell:
         """

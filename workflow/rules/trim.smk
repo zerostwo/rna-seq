@@ -1,20 +1,20 @@
 # 3. 去低质量
 rule trim:
     input:
-        r1 = "results/{sample}/cutadapt/cutadapt_R1.fastq.gz",
-        r2 = "results/{sample}/cutadapt/cutadapt_R2.fastq.gz"
+        r1 = "results/cutadapt/{sample}_R1.cutadapt.fastq.gz",
+        r2 = "results/cutadapt/{sample}_R2.cutadapt.fastq.gz",
     output:
-        trim_r1 = temp("results/{sample}/trim/trim_R1.fastq.gz"),
-        trim_unpaired_r1 = temp("results/{sample}/trim/trim_unpaired_R1.fastq.gz"),
-        trim_r2 = temp("results/{sample}/trim/trim_R2.fastq.gz"),
-        trim_unpaired_r2 = temp("results/{sample}/trim/trim_unpaired_R2.fastq.gz")
+        trim_r1 = temp("results/trim/{sample}_R1.trim.fastq.gz"),
+        trim_unpaired_r1 = temp("results/trim/{sample}_R1.trim.unpaired.fastq.gz"),
+        trim_r2 = temp("results/trim/{sample}_R2.trim.fastq.gz"),
+        trim_unpaired_r2 = temp("results/trim/{sample}_R2.trim.unpaired.fastq.gz"),
     log:
-        "results/{sample}/logs/trim.log"
+        "results/logs/{sample}.trim.log"
     conda:
         "../envs/rna.yaml"
     threads: workflow.cores * 0.5
     benchmark:
-        "results/{sample}/benchmarks/trim.benchmark.txt"
+        "results/benchmarks/{sample}.trim.benchmark.txt"
     shell:
         """
         trimmomatic PE -threads {threads} -phred33 \

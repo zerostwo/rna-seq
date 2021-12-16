@@ -1,18 +1,21 @@
+def get_featureCounts_input(SAMPLES):
+    return ["results/hisat2/{S}.bam".format(S=sample) for sample in SAMPLES]
+
 ## 6. 计数
 rule featureCounts:
     input:
-        "results/{sample}/hisat2/{sample}.bam"
+        get_featureCounts_input(SAMPLES)
     output:
-        "results/{sample}/featureCounts/{sample}.counts.txt"
+        "results/featureCounts/all.counts.txt"
     log:
-        "results/{sample}/logs/featureCounts.log"
+        "results/logs/all.featureCounts.log"
     conda:
         "../envs/rna.yaml"
-    threads: workflow.cores * 0.5
+    threads: workflow.cores
     params:
         gtf = config["gtf"]
     benchmark:
-        "results/{sample}/benchmarks/featureCounts.benchmark.txt"
+        "results/benchmarks/all.featureCounts.benchmark.txt"
     shell:
         """
         featureCounts -T {threads} -p -t exon -g gene_name -a {params.gtf} \

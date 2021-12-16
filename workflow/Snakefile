@@ -22,7 +22,7 @@ include: "rules/featureCounts.smk"
 # 设定需要保存的结果
 rule all:
     input:
-        expand("results/{sample}/fastqc/{sample}_R1_fastqc.html", sample=SAMPLES),
-        expand("results/{sample}/fastqc/{sample}_R2_fastqc.html", sample=SAMPLES),
-        expand("results/{sample}/hisat2/{sample}.bam", sample=SAMPLES),
-        expand("results/{sample}/featureCounts/{sample}.counts.txt", sample=SAMPLES)
+        expand("results/fastqc/{sample}_R1_fastqc.html", sample=SAMPLES),
+        expand("results/fastqc/{sample}_R2_fastqc.html", sample=SAMPLES),
+        expand("results/hisat2/{sample}.bam", sample=SAMPLES),
+        expand("results/featureCounts/all.counts.txt")

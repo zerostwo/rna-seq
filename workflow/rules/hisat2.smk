@@ -1,17 +1,17 @@
 # 4. hisat2比对
 rule hisat2:
     input:
-        r1 = "results/{sample}/trim/trim_R1.fastq.gz",
-        r2 = "results/{sample}/trim/trim_R2.fastq.gz",
+        r1 = "results/trim/{sample}_R1.trim.fastq.gz",
+        r2 = "results/trim/{sample}_R2.trim.fastq.gz",
     output:
-        temp("results/{sample}/hisat2/{sample}.sam")
+        temp("results/hisat2/{sample}.sam")
     log:
-        "results/{sample}/logs/hisat2.log"
+        "results/logs/{sample}.hisat2.log"
     conda:
         "../envs/rna.yaml"
     threads: workflow.cores * 0.5
     benchmark:
-        "results/{sample}/benchmarks/hisat2.benchmark.txt"
+        "results/benchmarks/{sample}.hisat2.benchmark.txt"
     params:
         index = config["index"]
     shell:
@@ -23,16 +23,16 @@ rule hisat2:
         """
 rule sam2bam:
     input:
-        "results/{sample}/hisat2/{sample}.sam"
+        "results/hisat2/{sample}.sam"
     output:
-        protected("results/{sample}/hisat2/{sample}.bam")
+        protected("results/hisat2/{sample}.bam")
     log:
-        "results/{sample}/logs/hisat2.log"
+        "results/logs/{sample}.hisat2.log"
     conda:
         "../envs/rna.yaml"
     threads: workflow.cores * 0.5
     benchmark:
-        "results/{sample}/benchmarks/fastqc.sam2bam.txt"
+        "results/benchmarks/{sample}.sam2bam.benchmark.txt"
     shell:
         """
         samtools view {input} -q {threads} -h -S -b -o {output}> {log} 2>&1
